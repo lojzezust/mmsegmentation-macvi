@@ -5,6 +5,8 @@ log_config = dict(
         dict(type='TextLoggerHook', by_epoch=False),
         # dict(type='TensorboardLoggerHook')
         # dict(type='PaviLoggerHook') # for internal services
+        # dict(type='MMSegWandbHook', init_kwargs={'project': "mmsegmentation"})
+        dict(type='WandbLoggerHook', init_kwargs={'project': "mmsegmentation"}, interval=50, with_step=False)
     ])
 # yapf:enable
 dist_params = dict(backend='nccl')
