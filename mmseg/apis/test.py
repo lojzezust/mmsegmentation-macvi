@@ -9,7 +9,9 @@ import torch
 from mmcv.engine import collect_results_cpu, collect_results_gpu
 from mmcv.image import tensor2imgs
 from mmcv.runner import get_dist_info
+from pathlib import Path
 
+OUT_FORMAT = '.png'
 
 def np2tmp(array, temp_file_name=None, tmpdir=None):
     """Save ndarray to local numpy file.
@@ -104,7 +106,8 @@ def single_gpu_test(model,
                 img_show = mmcv.imresize(img_show, (ori_w, ori_h))
 
                 if out_dir:
-                    out_file = osp.join(out_dir, img_meta['ori_filename'])
+                    out_filename = osp.splitext(img_meta['ori_filename'])[0] + OUT_FORMAT
+                    out_file = osp.join(out_dir, out_filename)
                 else:
                     out_file = None
 
