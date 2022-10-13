@@ -20,4 +20,4 @@ srun --job-name=${JOB_NAME} \
      --partition=gpu \
      --ntasks=1 \
      ${SRUN_ARGS} \
-     python -u tools/test.py ${CONFIG} ${CHECKPOINT} ${PY_ARGS} &
+     tools/echorun.sh python -u tools/test.py ${CONFIG} ${CHECKPOINT} ${PY_ARGS} &

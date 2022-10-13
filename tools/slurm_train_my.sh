@@ -19,4 +19,4 @@ srun --job-name=${JOB_NAME} \
      --partition=gpu \
      --ntasks=${GPUS} \
      ${SRUN_ARGS} \
-     python -u tools/train.py ${CONFIG} --launcher="slurm" ${PY_ARGS} &
+     tools/echorun.sh python -u tools/train.py ${CONFIG} --launcher="slurm" ${PY_ARGS} &
