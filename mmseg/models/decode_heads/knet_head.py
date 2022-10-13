@@ -418,6 +418,7 @@ class IterativeDecodeHead(BaseDecodeHead):
         self.kernel_update_head = nn.ModuleList()
         self.align_corners = self.kernel_generate_head.align_corners
         self.num_classes = self.kernel_generate_head.num_classes
+        self.out_channels = self.num_classes
         self.input_transform = self.kernel_generate_head.input_transform
         self.ignore_index = self.kernel_generate_head.ignore_index
 
