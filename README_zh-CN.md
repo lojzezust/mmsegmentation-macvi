@@ -72,12 +72,23 @@ MMSegmentation 是一个基于 PyTorch 的语义分割开源工具箱。它是 O
 
 ## 最新进展
 
-最新版本 v0.27.0 在 2022.7.28 发布：
+### 💎 稳定版本
 
-- 添加 Swin-L Transformer 模型
-- 更新了 ERFNet 在 Cityscapes 上的结果
+最新版本 v0.29.0 在 2022.10.10 发布：
+
+- 支持 PoolFormer (CVPR'2022)
 
 如果想了解更多版本更新细节和历史信息，请阅读[更新日志](docs/en/changelog.md)。
+
+### 🌟 1.x 预览版本
+
+全新的 **MMSegmentation v1.0.0rc0** 版本已经在 2022.8.31 发布：
+
+- 基于 [MMEngine](https://github.com/open-mmlab/mmengine) 统一了各组件接口。
+- 全面支持混合精度，训练测试速度更快。
+- 重构之后更加灵活的[架构](https://mmsegmentation.readthedocs.io/en/1.x/overview.html)。
+
+欢迎在 [1.x branch](https://github.com/open-mmlab/mmsegmentation/tree/1.x) 发现更多的新特性。欢迎 issue 和 PR。
 
 ## 安装
 
@@ -115,6 +126,7 @@ MMSegmentation 是一个基于 PyTorch 的语义分割开源工具箱。它是 O
 - [x] [BEiT (ICLR'2022)](configs/beit)
 - [x] [ConvNeXt (CVPR'2022)](configs/convnext)
 - [x] [MAE (CVPR'2022)](configs/mae)
+- [x] [PoolFormer (CVPR'2022)](configs/poolformer)
 
 已支持的算法：
 
