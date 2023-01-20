@@ -4,6 +4,6 @@ _base_ = [
 ]
 
 model = dict(
-    decode_head=dict(ignore_index=4, num_classes=3),
-    auxiliary_head=dict(ignore_index=4, num_classes=3),
+    decode_head=dict(ignore_index=255, num_classes=3),
+    auxiliary_head=dict(ignore_index=255, num_classes=3),
 )

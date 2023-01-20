@@ -22,9 +22,9 @@ class LaRSDataset(CustomDataset):
             split=split,
             img_dir='images',
             img_suffix='.jpg',
-            ann_dir='masks',
+            ann_dir='semantic_masks',
             seg_map_suffix='.png',
-            ignore_index=4,
+            ignore_index=255,
             reduce_zero_label=False,
             **kwargs)
         assert osp.exists(data_root)

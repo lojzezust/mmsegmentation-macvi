@@ -13,14 +13,14 @@ data = dict(
 # Set correct ignore index and num classes
 norm_cfg = dict(type='SyncBN', requires_grad=True)
 model = dict(
-    decode_head=dict(ignore_index=4, num_classes=3),
+    decode_head=dict(ignore_index=255, num_classes=3),
     auxiliary_head=[
         dict(
             type='FCNHead',
             in_channels=16,
             channels=16,
             num_convs=2,
-            ignore_index=4,
+            ignore_index=255,
             num_classes=3,
             in_index=1,
             norm_cfg=norm_cfg,
@@ -33,7 +33,7 @@ model = dict(
             in_channels=32,
             channels=64,
             num_convs=2,
-            ignore_index=4,
+            ignore_index=255,
             num_classes=3,
             in_index=2,
             norm_cfg=norm_cfg,
@@ -46,7 +46,7 @@ model = dict(
             in_channels=64,
             channels=256,
             num_convs=2,
-            ignore_index=4,
+            ignore_index=255,
             num_classes=3,
             in_index=3,
             norm_cfg=norm_cfg,
@@ -59,7 +59,7 @@ model = dict(
             in_channels=128,
             channels=1024,
             num_convs=2,
-            ignore_index=4,
+            ignore_index=255,
             num_classes=3,
             in_index=4,
             norm_cfg=norm_cfg,

@@ -1,7 +1,7 @@
 # dataset settings
 dataset_type = 'LaRSDataset'
-data_root = 'data/LaRS/'
-ignore_idx=4
+data_root = 'data/LaRS/v0.4'
+ignore_idx=255
 img_norm_cfg = dict(
     mean=[123.675, 116.28, 103.53], std=[58.395, 57.12, 57.375], to_rgb=True)
 crop_size = (512, 1024)
@@ -37,16 +37,16 @@ data = dict(
     workers_per_gpu=4,
     train=dict(
         type=dataset_type,
-        data_root=data_root,
-        split='list_train.txt',
+        data_root=data_root + 'train',
+        split='image_list.txt',
         pipeline=train_pipeline),
     val=dict(
         type=dataset_type,
-        data_root=data_root,
-        split='list_val.txt',
+        data_root=data_root + 'val',
+        split='image_list.txt',
         pipeline=test_pipeline),
     test=dict(
         type=dataset_type,
-        data_root=data_root,
-        split='list_test.txt',
+        data_root=data_root + 'test',
+        split='image_list.txt',
         pipeline=test_pipeline))

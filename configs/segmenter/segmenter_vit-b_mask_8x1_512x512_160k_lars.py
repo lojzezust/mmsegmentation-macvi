@@ -8,7 +8,7 @@ optimizer = dict(lr=0.001, weight_decay=0.0)
 # Override
 model = dict(
     # backbone=dict(init_cfg=dict(type='Pretrained', checkpoint=checkpoint)),
-    decode_head=dict(num_classes=3, ignore_index=4)
+    decode_head=dict(num_classes=3, ignore_index=255)
 )
 
 img_norm_cfg = dict(

@@ -10,14 +10,14 @@ model = dict(
     backbone=dict(
         backbone_cfg=dict(
             init_cfg=dict(type='Pretrained', checkpoint=checkpoint))),
-    decode_head=dict(ignore_index=4, num_classes=3),
+    decode_head=dict(ignore_index=255, num_classes=3),
     auxiliary_head=[
         dict(
             type='FCNHead',
             in_channels=128,
             channels=64,
             num_convs=1,
-            ignore_index=4,
+            ignore_index=255,
             num_classes=3,
             in_index=2,
             norm_cfg=norm_cfg,
@@ -31,7 +31,7 @@ model = dict(
             in_channels=128,
             channels=64,
             num_convs=1,
-            ignore_index=4,
+            ignore_index=255,
             num_classes=3,
             in_index=1,
             norm_cfg=norm_cfg,
@@ -45,7 +45,7 @@ model = dict(
             in_channels=256,
             channels=64,
             num_convs=1,
-            ignore_index=4,
+            ignore_index=255,
             num_classes=2,
             boundary_threshold=0.1,
             in_index=0,
