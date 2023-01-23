@@ -4,6 +4,9 @@ from mmcv.cnn.utils import revert_sync_batchnorm
 from tqdm.auto import tqdm
 from time import time
 import numpy as np
+import os
+import os.path as osp
+import json
 
 import mmcv
 from mmseg.datasets import build_dataloader, build_dataset
@@ -12,6 +15,7 @@ from mmseg.utils import build_dp, get_device
 
 NUM_SAMPLES = 200
 NUM_REPEATS = 5
+OUTPUT_DIR = 'output/latency'
 
 def get_args():
     parser = argparse.ArgumentParser()
@@ -20,6 +24,8 @@ def get_args():
                         help='Number of data samples used in the test.')
     parser.add_argument('-r', '--repeats', type=int, default=NUM_REPEATS,
                         help='Number of repetitions.')
+    parser.add_argument('-o', '--output_dir', type=str, default=OUTPUT_DIR,
+                        help='Output directory.')
 
     args = parser.parse_args()
     return args
@@ -92,19 +98,33 @@ def eval_inference_time(args):
             elapsed = end_time - start_time
             times.append(elapsed)
 
-        # Compute and print statistics
-        times = np.array(times)
-        per_img = times / args.num_samples
-        fps = 1. / per_img
+    # Compute and print statistics
+    times = np.array(times)
+    per_img = times / args.num_samples
+    fps = 1. / per_img
 
-        per_img_m = per_img.mean()
-        per_img_std = per_img.std()
+    per_img_m = per_img.mean()
+    per_img_std = per_img.std()
 
-        fps_m = fps.mean()
-        fps_std = fps.std()
+    fps_m = fps.mean()
+    fps_std = fps.std()
 
-        print('Latency: %.0f ± %.1f ms, FPS: %.1f ± %.2f' % (per_img_m * 1000, 2 * per_img_std * 1000, fps_m, 2 * fps_std))
+    print('Latency: %.0f ± %.1f ms, FPS: %.1f ± %.2f' % (per_img_m * 1000, 2 * per_img_std * 1000, fps_m, 2 * fps_std))
 
+    summary = {
+        'num_samples': args.num_samples,
+        'times': times.tolist(),
+        'latency': {'mean': per_img_m, 'std': per_img_std},
+        'fps': {'mean': fps_m, 'std': fps_std},
+    }
+
+    # Save summary to JSON
+    if not osp.exists(OUTPUT_DIR):
+        os.makedirs(OUTPUT_DIR)
+
+    cfg_name = osp.splitext(osp.basename(args.config))[0]
+    with open(osp.join(OUTPUT_DIR, cfg_name + '.json'), 'w') as file:
+        json.dump(summary, file)
 
 
 if __name__ == '__main__':
