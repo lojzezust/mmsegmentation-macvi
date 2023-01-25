@@ -13,7 +13,7 @@ from mmseg.datasets import build_dataloader, build_dataset
 from mmseg.models import build_segmentor
 from mmseg.utils import build_dp, get_device
 
-NUM_SAMPLES = 200
+NUM_SAMPLES = None
 NUM_REPEATS = 5
 OUTPUT_DIR = 'output/latency'
 
@@ -21,7 +21,7 @@ def get_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('config', type=str, help='Path to the model configuration file')
     parser.add_argument('-n', '--num_samples', type=int, default=NUM_SAMPLES,
-                        help='Number of data samples used in the test.')
+                        help='Number of data samples used in the test. If not specified all samples will be used.')
     parser.add_argument('-r', '--repeats', type=int, default=NUM_REPEATS,
                         help='Number of repetitions.')
     parser.add_argument('-o', '--output_dir', type=str, default=OUTPUT_DIR,
@@ -30,6 +30,9 @@ def get_args():
     args = parser.parse_args()
     return args
 
+def count_parameters(model):
+    return sum(p.numel() for p in model.parameters() if p.requires_grad)
+
 def eval_inference_time(args):
     cfg = mmcv.Config.fromfile(args.config)
 
@@ -37,10 +40,10 @@ def eval_inference_time(args):
         torch.backends.cudnn.benchmark = True
 
     cfg.model.pretrained = None
-    cfg.data.test.test_mode = True
+    cfg.data.val.test_mode = True
 
     # Build dataset
-    dataset = build_dataset(cfg.data.test)
+    dataset = build_dataset(cfg.data.val)
 
     # The default loader config
     loader_cfg = dict(
@@ -69,6 +72,9 @@ def eval_inference_time(args):
     cfg.model.train_cfg = None
     model = build_segmentor(cfg.model, test_cfg=cfg.get('test_cfg'))
 
+    # Get number of parameters
+    num_params = count_parameters(model)
+
     # Prepare for inference
     torch.cuda.empty_cache()
     model = revert_sync_batchnorm(model)
@@ -78,9 +84,11 @@ def eval_inference_time(args):
     # Preload data
     data = []
     for i,d in tqdm(enumerate(data_loader), desc='Reading data', total=args.num_samples):
-        if i >= args.num_samples:
+        if args.num_samples is not None and i >= args.num_samples:
             break
         data.append(d)
+
+    args.num_samples = len(data)
 
     with torch.no_grad():
         # Network warm-up
@@ -116,6 +124,7 @@ def eval_inference_time(args):
         'times': times.tolist(),
         'latency': {'mean': per_img_m, 'std': per_img_std},
         'fps': {'mean': fps_m, 'std': fps_std},
+        'num_params': num_params
     }
 
     # Save summary to JSON
