@@ -74,15 +74,16 @@ MMSegmentation 是一个基于 PyTorch 的语义分割开源工具箱。它是 O
 
 ### 💎 稳定版本
 
-最新版本 v0.29.0 在 2022.10.10 发布：
+最新版本 v0.30.0 在 2023.01.11 发布：
 
-- 支持 PoolFormer (CVPR'2022)
+- 添加 projects 目录以及示例项目
+- 支持高质量合成人脸数据集
 
 如果想了解更多版本更新细节和历史信息，请阅读[更新日志](docs/en/changelog.md)。
 
 ### 🌟 1.x 预览版本
 
-全新的 **MMSegmentation v1.0.0rc0** 版本已经在 2022.8.31 发布：
+全新的 **MMSegmentation v1.0.0rc3** 版本已经在 2022.12.31 发布：
 
 - 基于 [MMEngine](https://github.com/open-mmlab/mmengine) 统一了各组件接口。
 - 全面支持混合精度，训练测试速度更快。
@@ -127,6 +128,7 @@ MMSegmentation 是一个基于 PyTorch 的语义分割开源工具箱。它是 O
 - [x] [ConvNeXt (CVPR'2022)](configs/convnext)
 - [x] [MAE (CVPR'2022)](configs/mae)
 - [x] [PoolFormer (CVPR'2022)](configs/poolformer)
+- [x] [SegNeXt (NeurIPS'2022)](configs/segnext)
 
 已支持的算法：
 
@@ -183,6 +185,7 @@ MMSegmentation 是一个基于 PyTorch 的语义分割开源工具箱。它是 O
 - [x] [Potsdam](https://github.com/open-mmlab/mmsegmentation/blob/master/docs/zh_cn/dataset_prepare.md#isprs-potsdam)
 - [x] [Vaihingen](https://github.com/open-mmlab/mmsegmentation/blob/master/docs/zh_cn/dataset_prepare.md#isprs-vaihingen)
 - [x] [iSAID](https://github.com/open-mmlab/mmsegmentation/blob/master/docs/zh_cn/dataset_prepare.md#isaid)
+- [x] [ImageNetS](https://github.com/open-mmlab/mmsegmentation/blob/master/docs/en/dataset_prepare.md#imagenets)
 
 ## 常见问题
 
@@ -220,6 +223,7 @@ MMSegmentation 是一个由来自不同高校和企业的研发人员共同参�
 - [MMClassification](https://github.com/open-mmlab/mmclassification): OpenMMLab 图像分类工具箱
 - [MMDetection](https://github.com/open-mmlab/mmdetection): OpenMMLab 目标检测工具箱
 - [MMDetection3D](https://github.com/open-mmlab/mmdetection3d): OpenMMLab 新一代通用 3D 目标检测平台
+- [MMYOLO](https://github.com/open-mmlab/mmyolo): OpenMMLab YOLO 系列工具箱和基准测试
 - [MMRotate](https://github.com/open-mmlab/mmrotate): OpenMMLab 旋转框检测工具箱与测试基准
 - [MMSegmentation](https://github.com/open-mmlab/mmsegmentation): OpenMMLab 语义分割工具箱
 - [MMOCR](https://github.com/open-mmlab/mmocr): OpenMMLab 全流程文字检测识别理解工具包
