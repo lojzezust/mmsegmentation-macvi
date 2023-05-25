@@ -74,6 +74,7 @@ model = dict(
         num_classes=3,
         norm_cfg=norm_cfg,
         align_corners=False,
+        ignore_index=ignore_index,
         loss_decode=dict(
             type='CrossEntropyLoss', use_sigmoid=False, loss_weight=0.4)),
     # model training and testing settings
