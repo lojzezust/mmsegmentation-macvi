@@ -42,7 +42,7 @@ mastr153_repeat = dict(
     dataset=dict(
         type=dataset_type,
         data_root=ad_data_root,
-        split='all_list.txt',
+        split='annotated_list.txt',
         pipeline=train_pipeline)
 )
 
@@ -63,9 +63,7 @@ rosebud_train = dict(
 data = dict(
     samples_per_gpu=4,
     workers_per_gpu=4,
-    train=dict(
-        type='ConcatDataset',
-        datasets=[mastr1325_train, mastr153_repeat, rosebud_train]),
+    train=[mastr1325_train, mastr153_repeat, rosebud_train],
     val=dict(
         type=dataset_type,
         data_root=mastr_data_root,
