@@ -1,7 +1,8 @@
 # dataset settings
-dataset_type = 'LaRSDataset'
-data_root = 'data/LaRS/v0.9.3/'
-ignore_idx=255
+dataset_type = 'MaSTrDataset'
+data_root = 'data/mastr1325/'
+ad_data_root = 'data/mastr153/'
+ignore_idx=4
 img_norm_cfg = dict(
     mean=[123.675, 116.28, 103.53], std=[58.395, 57.12, 57.375], to_rgb=True)
 crop_size = (512, 1024)
@@ -32,21 +33,34 @@ test_pipeline = [
             dict(type='Collect', keys=['img']),
         ])
 ]
+
+mastr153_repeat = dict(
+    type='RepeatDataset',
+    times=8,
+    dataset=dict(
+        type=dataset_type,
+        data_root=ad_data_root,
+        split='annotated_list.txt',
+        pipeline=train_pipeline)
+)
+
+mastr1325_train = dict(
+    type=dataset_type,
+    data_root=data_root,
+    split='all_list.txt',
+    pipeline=train_pipeline)
+
 data = dict(
     samples_per_gpu=4,
     workers_per_gpu=4,
-    train=dict(
-        type=dataset_type,
-        data_root=data_root + 'train',
-        split='image_list.txt',
-        pipeline=train_pipeline),
+    train=[mastr1325_train, mastr153_repeat],
     val=dict(
         type=dataset_type,
-        data_root=data_root + 'val',
-        split='image_list.txt',
+        data_root=data_root,
+        split='val_list.txt',
         pipeline=test_pipeline),
     test=dict(
         type=dataset_type,
-        data_root=data_root + 'test',
-        split='image_list.txt',
+        data_root=data_root,
+        split='val_list.txt',
         pipeline=test_pipeline))
