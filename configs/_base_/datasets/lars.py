@@ -1,6 +1,6 @@
 # dataset settings
 dataset_type = 'LaRSDataset'
-data_root = 'data/LaRS/v0.9.3/'
+data_root = 'path/to/lars/' # TODO: change this to your own path
 ignore_idx=255
 img_norm_cfg = dict(
     mean=[123.675, 116.28, 103.53], std=[58.395, 57.12, 57.375], to_rgb=True)

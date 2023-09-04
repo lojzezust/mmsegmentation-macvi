@@ -95,8 +95,12 @@ def parse_args():
     parser.add_argument(
         '--opacity',
         type=float,
-        default=0.5,
+        default=1,
         help='Opacity of painted segmentation map. In (0, 1] range.')
+    parser.add_argument(
+        '--val',
+        action='store_true',
+        help='Test on validation set instead.')
     parser.add_argument('--local_rank', type=int, default=0)
     args = parser.parse_args()
     if 'LOCAL_RANK' not in os.environ:
@@ -133,6 +137,10 @@ def main():
     if args.cfg_options is not None:
         cfg.merge_from_dict(args.cfg_options)
 
+    ds_config = cfg.data.test
+    if args.val:
+        ds_config = cfg.data.val
+
     # set multi-process settings
     setup_multi_processes(cfg)
 
@@ -141,12 +149,12 @@ def main():
         torch.backends.cudnn.benchmark = True
     if args.aug_test:
         # hard code index
-        cfg.data.test.pipeline[1].img_ratios = [
+        ds_config.pipeline[1].img_ratios = [
             0.5, 0.75, 1.0, 1.25, 1.5, 1.75
         ]
-        cfg.data.test.pipeline[1].flip = True
+        ds_config.pipeline[1].flip = True
     cfg.model.pretrained = None
-    cfg.data.test.test_mode = True
+    ds_config.test_mode = True
 
     if args.gpu_id is not None:
         cfg.gpu_ids = [args.gpu_id]
@@ -189,7 +197,7 @@ def main():
 
     # build the dataloader
     # TODO: support multiple images per gpu (only minor changes are needed)
-    dataset = build_dataset(cfg.data.test)
+    dataset = build_dataset(ds_config)
     # The default loader config
     loader_cfg = dict(
         # cfg.gpus will be ignored if distributed
