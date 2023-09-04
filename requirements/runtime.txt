@@ -4,3 +4,4 @@ numpy
 packaging
 prettytable
 scipy
+opencv-python

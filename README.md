@@ -40,7 +40,13 @@ pip install -v -e .
 # thus any local modifications made to the code will take effect without reinstallation.
 ```
 
-**Step 4.** Configure paths.
+**Step 4.** Install additional requirements.
+
+```shell
+pip install -r requirements.txt
+```
+
+**Step 5.** Configure paths.
 
 Download the [LaRS dataset](https://lojzezust.github.io/lars-dataset/). Update the path in the dataset config `configs/_base_/datasets/lars.py`, to point to the location of LaRS dataset.
 
@@ -59,7 +65,7 @@ By default the configs use a batch size of 4 per GPU. You can change this in the
 
 ### Running inference
 
-Use the `tools/test.py` script to run inference on the LaRS test set (for submission).
+Use the `tools/test.py` script to run inference on the LaRS test set (for submission to [macvi.org](https://macvi.org/upload?track=LaRS%20Semantic%20Segmentation)).
 
 ```shell
 CONFIG=configs/fcn/fcn_r50-d8_512x1024_40k_lars.py
